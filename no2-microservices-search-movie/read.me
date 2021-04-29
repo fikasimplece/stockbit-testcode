@@ -1,0 +1,93 @@
+How to test :
+
+1. Execute file log_movie.sql
+2. Keluarkan folder stockbit-testcode menjadi single folder
+3. Jalankan go run main.go (pelamar menggunakan windows)
+4. Terdapat 3 endpoint 
+   a. /get/search digunakan untuk pencarian data log_movie
+      Url : http://localhost:7000/get/search?searchword=Appocalypse&pagination=2
+      Param : searchword & pagination
+      Response success : 
+        {
+            "Response": "True",
+            "Search": [
+                {
+                    "Poster": "https://m.media-amazon.com/images/M/MV5BMTdjZTliODYtNWExMi00NjQ1LWIzN2MtN2Q5NTg5NTk3NzliL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+                    "Title": "Batman: The Killing Joke",
+                    "Type": "movie",
+                    "Year": "2016",
+                    "imdbID": "tt4853102"
+                },
+            ]
+        }
+      Response error :
+        {
+            "Error": "Movie not found!",
+            "Response": "False"
+        }
+   b. /get/detail digunakan untuk menampilkan detail dari movie
+      Url : http://localhost:7000/get/detail?title=Batman: Gotham Knight
+      Param : title
+      Response success : 
+        {
+            "Actors": "Kevin Conroy, Jason Marsden, Scott Menville, George Newbern",
+            "Awards": "1 win & 2 nominations.",
+            "BoxOffice": "N/A",
+            "Country": "USA, Japan, South Korea",
+            "DVD": "08 Jul 2008",
+            "Director": "Yasuhiro Aoki, Futoshi Higashide, Toshiyuki Kubooka, Hiroshi Morioka, Jong-Sik Nam, Shôjirô Nishimi, Yûichirô Hayashi(co-director)",
+            "Genre": "Animation, Action, Crime, Sci-Fi, Thriller",
+            "Language": "English, Japanese, Spanish, Portuguese, Thai",
+            "Metascore": "N/A",
+            "Plot": "A collection of key events mark Bruce Wayne's life as he journeys from beginner to Dark Knight.",
+            "Poster": "https://m.media-amazon.com/images/M/MV5BM2I0YTFjOTUtMWYzNC00ZTgyLTk2NWEtMmE3N2VlYjEwN2JlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+            "Production": "Warner Bros. Animation",
+            "Rated": "PG-13",
+            "Ratings": [
+                {
+                    "Source": "Internet Movie Database",
+                    "Value": "6.8/10"
+                },
+                {
+                    "Source": "Rotten Tomatoes",
+                    "Value": "75%"
+                }
+            ],
+            "Released": "08 Jul 2008",
+            "Response": "True",
+            "Runtime": "75 min",
+            "Title": "Batman: Gotham Knight",
+            "Type": "movie",
+            "Website": "N/A",
+            "Writer": "Bob Kane (creator: Batman), Jordan Goldberg (story), Josh Olson (screenplay), Jordan Goldberg (story), Greg Rucka (screenplay), Jordan Goldberg (story), Jordan Goldberg (screenplay), Jordan Goldberg (story), David S. Goyer (screenplay), Jordan Goldberg (story), Brian Azzarello (screenplay), Jordan Goldberg (story), Alan Burnett (screenplay)",
+            "Year": "2008",
+            "imdbID": "tt1117563",
+            "imdbRating": "6.8",
+            "imdbVotes": "26,697"
+        }
+      Response error :
+        {
+            "Error": "Movie not found!",
+            "Response": "False"
+        }
+
+    c. /movie-log Untuk melihat log movie 
+        Url : http://localhost:7000/movie-log
+        Param : (tidak ada)
+        Response success :
+        {
+            [
+                {
+                    "id": 14,
+                    "imdbid": "yos sudarso",
+                    "created_at": "0001-01-01T00:00:00Z",
+                    "updated_at": "0001-01-01T00:00:00Z",
+                    "Path": "detail"
+                },
+            ]
+        }
+        Response error :
+        "message : sql: Scan error on column index 4, name \"path\": converting NULL to string is unsupported"
+
+5. Implementasi Go-Routine dilakukan pada fungsi insert data log (penggunaan di search.go) karena fungsi ini dapat dijalankan tanpa dipengaruhi apapun
+
